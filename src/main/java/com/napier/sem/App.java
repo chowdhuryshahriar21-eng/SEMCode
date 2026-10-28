@@ -108,6 +108,31 @@ public class App
             return null;
         }
     }
+
+    public boolean updateEmployee(int ID, String firstName, String lastName)
+    {
+        String sql = "UPDATE employees "
+                + "SET first_name = ?, last_name = ? "
+                + "WHERE emp_no = ?";
+
+        try (PreparedStatement stmt = con.prepareStatement(sql))
+        {
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setInt(3, ID);
+
+            int rowsUpdated = stmt.executeUpdate();
+
+            return rowsUpdated > 0;
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Failed to update employee: " + e.getMessage());
+            return false;
+        }
+    }
+
+
     public void displayEmployee(Employee emp)
     {
         if (emp != null)
